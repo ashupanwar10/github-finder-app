@@ -6,7 +6,7 @@ import Spinner from "../components/layout/Spinner";
 
 import GithubContext from "../context/github/GithubContext";
 import RepoList from "../components/repos/RepoList";
-import { getUser, getUserRepos } from "../context/github/GithubActions";
+import { getUsersAndRepos } from "../context/github/GithubActions";
 
 function User() {
     const { user, loading, repos, dispatch } = useContext(GithubContext);
@@ -15,10 +15,8 @@ function User() {
     useEffect(() => {
         dispatch({ type: "SET_LOADING" });
         const getUserData = async () => {
-            const userData = await getUser(params.login);
-            dispatch({ type: "GET_USER", payload: userData });
-            const userRepos = await getUserRepos(params.login);
-            dispatch({ type: "GET_REPOS", payload: userRepos });
+            const userData = await getUsersAndRepos(params.login);
+            dispatch({ type: "GET_USER_AND_REPOS", payload: userData });
         };
 
         getUserData();
